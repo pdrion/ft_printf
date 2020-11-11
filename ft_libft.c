@@ -6,7 +6,7 @@
 /*   By: philippe <philippe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 19:24:24 by pdrion            #+#    #+#             */
-/*   Updated: 2020/11/11 22:53:00 by pdrion           ###   ########.fr       */
+/*   Updated: 2020/11/12 00:21:27 by pdrion           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,4 +72,34 @@ char hex_digit(int v)
         return '0' + v;
     else
         return 'a' + v - 10; // <-- Here	
+}
+void ft_putspaces(int space)
+{
+	while(space > 1)
+		{
+			ft_putchar(' ');
+			space = space -1;
+		}
+}
+int		ft_atoi(const char *str)
+{
+	int i;
+	int nb;
+	int isneg;
+
+	i = 0;
+	nb = 0;
+	isneg = 1;
+	while (str[i] != '\0' && ((str[i] >= 9 && str[i] <= 13) || str[i] == ' '))
+		i++;
+	if (str[i] == '-')
+	{
+		isneg = -1;
+		i++;
+	}
+	else if (str[i] == '+')
+		i++;
+	while (str[i] >= '0' && str[i] <= '9')
+		nb = nb * 10 + (str[i++] - 48);
+	return (isneg * nb);
 }

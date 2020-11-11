@@ -6,7 +6,7 @@
 /*   By: philippe <philippe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 19:25:25 by pdrion            #+#    #+#             */
-/*   Updated: 2020/11/11 22:53:24 by pdrion           ###   ########.fr       */
+/*   Updated: 2020/11/11 23:57:09 by pdrion           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ size_t	ft_strlen(const char *s);
 int		ft_isascii(char c);
 int		ft_isdigit(int c);
 char hex_digit(int v);
-
+void    ft_putspaces(int space);
+int		ft_atoi(const char *str);
 
 void ft_printf_str(va_list *my_list);
 void ft_printf_char(va_list *my_list);

@@ -6,7 +6,7 @@
 /*   By: pdrion <pdrion@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/11 12:39:07 by pdrion            #+#    #+#             */
-/*   Updated: 2020/11/11 23:08:58 by pdrion           ###   ########.fr       */
+/*   Updated: 2020/11/12 00:17:25 by pdrion           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,27 +92,38 @@ int ft_printf(const char *src, ...)
 	char tabIndex[7] = {'s', 'c', 'd', 'i', 'u',  'p', 0};
 	va_list my_list;
 	int i;
+	int space;
 	int tmpIndex;
 	
 	va_start(my_list, src);
 	i = 0;
+	space = 0;
 	tmpIndex = 0;
 
 	while (src[i] != 0)
 		{
 		if(i != 0 && src[i - 1] == '%')
 				{
+					if(ft_isdigit(src[i])==1)
+						{
+							space = src[i] - 48;
+						i++;
+						}
+					
 					tmpIndex = findIndex(tabIndex, src[i]);
 					if(tmpIndex != -1)
 						{
+							ft_putspaces(space);
 							(*tabFunction[tmpIndex]) (&my_list);
 						}
 				}
-			else if (src[i] != '%')
-				{
-				write(1, &src[i], 1);
-				}
-			i++;
+					else if (src[i] != '%')
+						{
+							write(1, &src[i], 1);
+						}
+				
+		i++;
+		space = 0;
 		}
 	return(0);
 }
