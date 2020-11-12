@@ -6,7 +6,7 @@
 /*   By: pdrion <pdrion@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/11 12:39:07 by pdrion            #+#    #+#             */
-/*   Updated: 2020/11/12 00:17:25 by pdrion           ###   ########.fr       */
+/*   Updated: 2020/11/12 09:30:03 by pdrion           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,16 +94,24 @@ int ft_printf(const char *src, ...)
 	int i;
 	int space;
 	int tmpIndex;
+	int isneg;
 	
 	va_start(my_list, src);
 	i = 0;
 	space = 0;
 	tmpIndex = 0;
+	isneg = 0;
 
 	while (src[i] != 0)
 		{
 		if(i != 0 && src[i - 1] == '%')
 				{
+					if(src[i] == '-')
+						{
+						 isneg = 1;
+						 i++;
+						}
+
 					if(ft_isdigit(src[i])==1)
 						{
 							space = src[i] - 48;
@@ -113,9 +121,17 @@ int ft_printf(const char *src, ...)
 					tmpIndex = findIndex(tabIndex, src[i]);
 					if(tmpIndex != -1)
 						{
-							ft_putspaces(space);
-							(*tabFunction[tmpIndex]) (&my_list);
-						}
+							if (isneg == 0)
+								{
+									ft_putspaces(space);
+									(*tabFunction[tmpIndex]) (&my_list);
+								}
+							else
+								{
+									(*tabFunction[tmpIndex]) (&my_list)	;
+									ft_putspaces(space);
+								}
+					}
 				}
 					else if (src[i] != '%')
 						{
@@ -124,6 +140,7 @@ int ft_printf(const char *src, ...)
 				
 		i++;
 		space = 0;
+		isneg = 0;
 		}
 	return(0);
 }
