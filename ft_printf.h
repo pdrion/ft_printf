@@ -6,7 +6,7 @@
 /*   By: philippe <philippe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 19:25:25 by pdrion            #+#    #+#             */
-/*   Updated: 2020/11/13 16:14:37 by pdrion           ###   ########.fr       */
+/*   Updated: 2020/11/15 18:10:47 by pdrion           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,11 @@
 
 
 typedef struct	s_flag{
+	char * spec_mask;
+	char * conversion_mask;
+	char * size_mask;
 	char specifier; //csd...
+	char formatspecifier; // ' ' or '0'
 	char conversion; //-+ 0#
 	int width; //width of printed char
 	int precision; //number after .
@@ -31,27 +35,30 @@ typedef struct	s_flag{
 	int len; //return value of printf
 }t_flag;
 
-	char * spec_mask;
-	char * conversion_mask;
-	char * precision_mask;
+	
 
 
 
 void    ft_putchar(char c);
 void	ft_putstr(char *s);
+void	ft_putstrlen(char *s, int len);
 void	ft_putnbr(int n);
 size_t	ft_strlen(const char *s);
 int		ft_isascii(char c);
 int		ft_isdigit(int c);
 char hex_digit(int v);
-void    ft_putspaces(int space);
+void    ft_putspaces(int space, char c);
 int		ft_atoi(const char *str);
+char	*ft_itoa(int n);
 
-void ft_printf_str(va_list *my_list, int isneg, int space);
-void ft_printf_char(va_list *my_list, int isneg, int space);
-void ft_printf_nbr(va_list *my_list, int isneg, int space);
-void ft_printf_nbru(va_list *my_list, int isneg, int space);
-void ft_printf_adress(va_list *my_list, int isneg, int space);
+int ft_strindex(char *tab, char element);
+int ft_parser(const char *src , t_flag * s_flagdef, va_list *my_list);
+
+void ft_printf_str(va_list *my_list, t_flag * s_flagdef);
+void ft_printf_char(va_list *my_list, t_flag * s_flagdef);
+void ft_printf_nbr(va_list *my_list, t_flag * s_flagdef);
+void ft_printf_nbru(va_list *my_list, t_flag * s_flagdef);
+void ft_printf_adress(va_list *my_list, t_flag * s_flagdef);
 int findIndex(char *tab, char element);
 
 int     ft_printf(const char *src, ...);

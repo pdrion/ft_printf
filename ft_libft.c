@@ -6,7 +6,7 @@
 /*   By: philippe <philippe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 19:24:24 by pdrion            #+#    #+#             */
-/*   Updated: 2020/11/12 00:21:27 by pdrion           ###   ########.fr       */
+/*   Updated: 2020/11/15 11:43:10 by pdrion           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,16 @@ void	ft_putstr(char *s)
 		return ;
 	while (*s)
 		ft_putchar(*s++);
+}
+void	ft_putstrlen(char *s, int len)
+{
+	int i;
+	//len = (len != -1) ? len : ft_strlen(s);
+	i = 0;
+	if (!s)
+		return ;
+	while (s[i] && i <= len - 1)
+		ft_putchar(s[i++]);
 }
 
 void	ft_putnbr(int n)
@@ -73,11 +83,13 @@ char hex_digit(int v)
     else
         return 'a' + v - 10; // <-- Here	
 }
-void ft_putspaces(int space)
+void ft_putspaces(int space, char c)
 {
-	while(space > 1)
+	if(!c)
+		return;
+	while(space >= 1)
 		{
-			ft_putchar(' ');
+			ft_putchar(c);
 			space = space -1;
 		}
 }
@@ -102,4 +114,31 @@ int		ft_atoi(const char *str)
 	while (str[i] >= '0' && str[i] <= '9')
 		nb = nb * 10 + (str[i++] - 48);
 	return (isneg * nb);
+}
+
+char	*ft_itoa(int n)
+{
+	unsigned int	nb;
+	int				len;
+	char			*result;
+
+	result = NULL;
+	len = (n <= 0 ? 1 : 0);
+	nb = (n < 0 ? -n : n);
+	while (nb)
+	{
+		nb = nb / 10;
+		len++;
+	}
+	if (!(result = malloc(sizeof(char) * len + 1)))
+		return (NULL);
+	result[len--] = '\0';
+	nb = (n < 0 ? -n : n);
+	while (len)
+	{
+		result[len--] = nb % 10 + 48;
+		nb = nb / 10;
+	}
+	result[0] = (n < 0 ? '-' : nb + 48);
+	return (result);
 }
