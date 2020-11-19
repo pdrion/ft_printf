@@ -6,49 +6,86 @@
 /*   By: pdrion <pdrion@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/15 16:34:05 by pdrion            #+#    #+#             */
-/*   Updated: 2020/11/15 18:49:50 by pdrion           ###   ########.fr       */
+/*   Updated: 2020/11/19 20:57:27 by pdrion           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-
-int ft_parser(const char *src , t_flag * s_flagdef, va_list *my_list)
+void	ft_parser_conversion(const char * src, t_flag * s_flag)
 {
-	int i;
 	int tmpindex;
 
-	i = 0;
-	while (s_flagdef->specifier == '\0' && src[i] != '\0')
+	tmpindex=0;
+
+	if((tmpindex = ft_strindex(s_flag->conversion_mask, *src)) != -1)
 		{
-				if((tmpindex = ft_strindex(s_flagdef->conversion_mask, src[i])) != -1)
-					{
-						s_flagdef->conversion = s_flagdef->conversion_mask[tmpindex];
-						i++;
-					}	
-				else if (src[i] >= '0' && src[i] <= '9')
-					{
-						while (src[i] >= '0' && src[i] <= '9')
-							s_flagdef->width = s_flagdef->width * 10 + (src[i++] - 48);						
-					}
-				else if (src[i]== '.')
-					{
-						i++;
-						s_flagdef->precision = 0;
-						if (src[i]== '*')
-							s_flagdef->precision = va_arg(*my_list, int);
-						while (src[i] >= '0' && src[i] <= '9')
-							s_flagdef->precision = s_flagdef->precision * 10 + (src[i++] - 48);		
-				}
-				else if((tmpindex = ft_strindex(s_flagdef->spec_mask, src[i])) != -1 && src[i] != '\0')
-					{
-						s_flagdef->specifier = s_flagdef->spec_mask[tmpindex];
-						if (s_flagdef->conversion == '0'&& s_flagdef->precision == -1 )
-							s_flagdef->formatspecifier  = '0';
-						return (i);//le nombre de caracteres lu pour passer
-					}
-				else
-					i++;
+			if (!(s_flag->conversion_mask[tmpindex] == '0' && s_flag->conversion == '-'))
+		s_flag->conversion = s_flag->conversion_mask[tmpindex];
+		}	
+}
+
+void	ft_parser_width(const char * src, t_flag * s_flag)
+{
+	if (s_flag->precision == -1)
+		{
+			if (*src >= '0' && *src <= '9')
+				s_flag->width = s_flag->width * 10 + (*src - 48);
 		}
-	return (-1);//le nombre de caracteres lu pour passer
+}
+
+void	ft_parser_precision(const char * src, t_flag * s_flag, va_list *my_list)
+{
+	if (*src == '.')
+	{
+		src++;
+		s_flag->precision = 0;
+		if (*src == '*')
+			s_flag->precision = va_arg(*my_list, int);
+		while (*src >= '0' && *src <= '9')
+			s_flag->precision = s_flag->precision * 10 + (*src++ - 48);		
+	}
+}
+
+void	ft_parser_spec(const char * src, t_flag * s_flag)
+{
+	int tmpindex;
+		tmpindex=0;
+	if((tmpindex = ft_strindex(s_flag->spec_mask, *src)) != -1 && *src != '\0')
+	{
+		s_flag->specifier = s_flag->spec_mask[tmpindex];
+		if (s_flag->conversion == '0'&& s_flag->precision == -1 )
+			s_flag->formatspecifier  = '0';
+	}
+}
+
+void ft_debug(t_flag * s_flag)
+{
+	printf("conversion : %c\n" , s_flag->conversion);
+	printf("width : %d\n" , s_flag->width);
+	printf("precision : %d\n" , s_flag->precision);
+	printf("specifier : %c\n" , s_flag->specifier);
+	printf("format specifier : %c\n" , s_flag->formatspecifier);	
+	printf("isneg : %d\n" , s_flag->isneg);
+		
+}
+
+int ft_parser(const char *src , t_flag * s_flag, va_list *my_list)
+{
+	int i;
+	i= 0;
+	
+	while (s_flag->specifier == '\0' || *src != '\0')
+	{
+		ft_parser_conversion(src + i, s_flag);
+		ft_parser_width(src + i, s_flag);
+		ft_parser_precision(src + i, s_flag, my_list);
+		ft_parser_spec(src + i, s_flag);
+		//ft_debug(s_flag);
+		
+		if(s_flag->specifier != '\0')
+			return (i);
+		i++;
+	}
+	return(i);
 }
