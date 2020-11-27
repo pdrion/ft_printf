@@ -1,25 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pdrion <pdrion@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/04 14:17:33 by pdrion            #+#    #+#             */
-/*   Updated: 2020/11/27 23:51:26 by pdrion           ###   ########.fr       */
+/*   Created: 2019/11/30 16:27:50 by pdrion            #+#    #+#             */
+/*   Updated: 2019/11/30 21:50:47 by pdrion           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/ft_printf.h"
-#include <string.h>
+#include "libft.h"
 
-int main(){
-//---
-	//int		i = 42;
+void	ft_bzero(void *s, size_t n)
+{
+	char	*c;
 
-	printf("{%d}\n", printf("\033[1;32mTest 18 => \033[0m|%05.*d|", -15, 42));
-	ft_printf("{%d}\n", ft_printf("\033[1;31mTest 18 => \033[0m|%05.*d|", -15, 42));
-	
-	return (0);
-
+	c = s;
+	while (n)
+	{
+		*c = 0;
+		c++;
+		n--;
+	}
 }

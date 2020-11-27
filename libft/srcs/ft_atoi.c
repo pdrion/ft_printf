@@ -1,25 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pdrion <pdrion@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/04 14:17:33 by pdrion            #+#    #+#             */
-/*   Updated: 2020/11/27 23:51:26 by pdrion           ###   ########.fr       */
+/*   Created: 2019/11/30 16:54:24 by pdrion            #+#    #+#             */
+/*   Updated: 2019/11/30 21:49:41 by pdrion           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/ft_printf.h"
-#include <string.h>
+#include "libft.h"
 
-int main(){
-//---
-	//int		i = 42;
+int		ft_atoi(const char *str)
+{
+	int i;
+	int nb;
+	int isneg;
 
-	printf("{%d}\n", printf("\033[1;32mTest 18 => \033[0m|%05.*d|", -15, 42));
-	ft_printf("{%d}\n", ft_printf("\033[1;31mTest 18 => \033[0m|%05.*d|", -15, 42));
-	
-	return (0);
-
+	i = 0;
+	nb = 0;
+	isneg = 1;
+	while (str[i] != '\0' && ((str[i] >= 9 && str[i] <= 13) || str[i] == ' '))
+		i++;
+	if (str[i] == '-')
+	{
+		isneg = -1;
+		i++;
+	}
+	else if (str[i] == '+')
+		i++;
+	while (str[i] >= '0' && str[i] <= '9')
+		nb = nb * 10 + (str[i++] - 48);
+	return (isneg * nb);
 }

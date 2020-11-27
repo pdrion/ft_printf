@@ -1,25 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pdrion <pdrion@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/04 14:17:33 by pdrion            #+#    #+#             */
-/*   Updated: 2020/11/27 23:51:26 by pdrion           ###   ########.fr       */
+/*   Created: 2019/11/30 18:08:16 by pdrion            #+#    #+#             */
+/*   Updated: 2019/11/30 22:41:50 by pdrion           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/ft_printf.h"
-#include <string.h>
+#include "libft.h"
 
-int main(){
-//---
-	//int		i = 42;
+char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
+{
+	char			*result;
+	unsigned int	i;
 
-	printf("{%d}\n", printf("\033[1;32mTest 18 => \033[0m|%05.*d|", -15, 42));
-	ft_printf("{%d}\n", ft_printf("\033[1;31mTest 18 => \033[0m|%05.*d|", -15, 42));
-	
-	return (0);
-
+	i = 0;
+	result = NULL;
+	if (s && f)
+	{
+		if (!(result = (char *)malloc(sizeof(char) *
+		(ft_strlen(s) + 1))))
+			return (NULL);
+		while (s[i])
+		{
+			result[i] = f(i, s[i]);
+			i++;
+		}
+		result[i] = '\0';
+		return (result);
+	}
+	return (NULL);
 }

@@ -1,25 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_lstmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pdrion <pdrion@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/04 14:17:33 by pdrion            #+#    #+#             */
-/*   Updated: 2020/11/27 23:51:26 by pdrion           ###   ########.fr       */
+/*   Created: 2019/11/30 18:37:51 by pdrion            #+#    #+#             */
+/*   Updated: 2019/11/30 22:10:58 by pdrion           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/ft_printf.h"
-#include <string.h>
+#include "libft.h"
 
-int main(){
-//---
-	//int		i = 42;
+t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
+{
+	t_list	*new_list;
+	t_list	*n;
 
-	printf("{%d}\n", printf("\033[1;32mTest 18 => \033[0m|%05.*d|", -15, 42));
-	ft_printf("{%d}\n", ft_printf("\033[1;31mTest 18 => \033[0m|%05.*d|", -15, 42));
-	
-	return (0);
-
+	new_list = NULL;
+	while (lst)
+	{
+		if (!(n = ft_lstnew(f(lst->content))))
+			ft_lstdelone(lst, del);
+		else
+			ft_lstadd_back(&new_list, n);
+		lst = lst->next;
+	}
+	return (new_list);
 }

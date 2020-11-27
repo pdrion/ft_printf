@@ -1,25 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pdrion <pdrion@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/04 14:17:33 by pdrion            #+#    #+#             */
-/*   Updated: 2020/11/27 23:51:26 by pdrion           ###   ########.fr       */
+/*   Created: 2019/11/30 16:49:45 by pdrion            #+#    #+#             */
+/*   Updated: 2019/11/30 22:40:05 by pdrion           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/ft_printf.h"
-#include <string.h>
+#include "libft.h"
 
-int main(){
-//---
-	//int		i = 42;
+size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
+{
+	size_t size_src;
+	size_t size_new;
 
-	printf("{%d}\n", printf("\033[1;32mTest 18 => \033[0m|%05.*d|", -15, 42));
-	ft_printf("{%d}\n", ft_printf("\033[1;31mTest 18 => \033[0m|%05.*d|", -15, 42));
-	
-	return (0);
-
+	if (src == NULL)
+		return (0);
+	size_src = ft_strlen(src);
+	size_new = 0;
+	if (dstsize == 0)
+		return (size_src);
+	if (size_src >= dstsize)
+		size_new = dstsize - 1;
+	else
+		size_new = size_src;
+	ft_memcpy(dst, src, size_new);
+	dst[size_new] = '\0';
+	return (size_src);
 }

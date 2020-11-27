@@ -1,25 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pdrion <pdrion@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/04 14:17:33 by pdrion            #+#    #+#             */
-/*   Updated: 2020/11/27 23:51:26 by pdrion           ###   ########.fr       */
+/*   Created: 2019/11/30 16:45:41 by pdrion            #+#    #+#             */
+/*   Updated: 2019/11/30 23:05:26 by pdrion           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/ft_printf.h"
-#include <string.h>
+#include "libft.h"
 
-int main(){
-//---
-	//int		i = 42;
+char	*ft_strrchr(const char *s, int c)
+{
+	char	ch;
+	char	*src;
+	char	*pos;
+	int		i;
 
-	printf("{%d}\n", printf("\033[1;32mTest 18 => \033[0m|%05.*d|", -15, 42));
-	ft_printf("{%d}\n", ft_printf("\033[1;31mTest 18 => \033[0m|%05.*d|", -15, 42));
-	
-	return (0);
-
+	ch = (char)c;
+	src = (char *)s;
+	pos = NULL;
+	i = 0;
+	while (src[i] != '\0')
+	{
+		if (src[i] == ch)
+			pos = &src[i];
+		i++;
+	}
+	if (ch == '\0')
+		return (&src[i]);
+	return (pos);
 }

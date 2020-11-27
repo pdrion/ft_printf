@@ -1,25 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pdrion <pdrion@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/04 14:17:33 by pdrion            #+#    #+#             */
-/*   Updated: 2020/11/27 23:51:26 by pdrion           ###   ########.fr       */
+/*   Created: 2019/11/30 17:14:27 by pdrion            #+#    #+#             */
+/*   Updated: 2019/11/30 22:38:26 by pdrion           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/ft_printf.h"
-#include <string.h>
+#include "libft.h"
 
-int main(){
-//---
-	//int		i = 42;
+char	*ft_strjoin(char const *s1, char const *s2)
+{
+	char			*result;
+	unsigned int	i;
 
-	printf("{%d}\n", printf("\033[1;32mTest 18 => \033[0m|%05.*d|", -15, 42));
-	ft_printf("{%d}\n", ft_printf("\033[1;31mTest 18 => \033[0m|%05.*d|", -15, 42));
-	
-	return (0);
-
+	i = 0;
+	if (s1 == NULL || s2 == NULL)
+		return (NULL);
+	if (!(result = (char*)malloc(sizeof(*result) *
+		(ft_strlen(s1) + ft_strlen(s2) + 1))))
+		return (NULL);
+	while (*s1 != '\0')
+		result[i++] = *s1++;
+	while (*s2 != '\0')
+		result[i++] = *s2++;
+	result[i] = '\0';
+	return (result);
 }

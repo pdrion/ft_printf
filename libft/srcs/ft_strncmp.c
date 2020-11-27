@@ -1,25 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pdrion <pdrion@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/04 14:17:33 by pdrion            #+#    #+#             */
-/*   Updated: 2020/11/27 23:51:26 by pdrion           ###   ########.fr       */
+/*   Created: 2019/11/30 16:48:29 by pdrion            #+#    #+#             */
+/*   Updated: 2019/11/30 22:45:59 by pdrion           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/ft_printf.h"
-#include <string.h>
+#include "libft.h"
 
-int main(){
-//---
-	//int		i = 42;
+int		ft_strncmp(const char *s1, const char *s2, size_t n)
+{
+	unsigned char	*c1;
+	unsigned char	*c2;
+	size_t			i;
 
-	printf("{%d}\n", printf("\033[1;32mTest 18 => \033[0m|%05.*d|", -15, 42));
-	ft_printf("{%d}\n", ft_printf("\033[1;31mTest 18 => \033[0m|%05.*d|", -15, 42));
-	
-	return (0);
-
+	c1 = (unsigned char *)s1;
+	c2 = (unsigned char *)s2;
+	i = 0;
+	if (n == 0)
+		return (0);
+	while (i < n && c1[i] != '\0' && c2[i] != '\0')
+	{
+		if (c1[i] != c2[i])
+			return (c1[i] - c2[i]);
+		i++;
+	}
+	if (i == n)
+		return (0);
+	else
+		return (c1[i] - c2[i]);
 }
